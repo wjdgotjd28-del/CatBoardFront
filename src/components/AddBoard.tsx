@@ -1,0 +1,146 @@
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import React, { useState } from "react";
+import type { Board } from "../type";
+import { addBoard } from "../api/boardApi";
+import { categoryOptions } from "../category";
+
+type AddBoardProps = {
+  loadBoardData: () => void;
+};
+
+export default function AddBoard({ loadBoardData }: AddBoardProps) {
+  const [open, setOpen] = useState(false);
+  const [board, setBoard] = useState<Board>({
+    id: 0,
+    title: "",
+    content: "",
+    regTime: "",
+    category: "",
+    imgUrl: "",
+  });
+
+  // input 값 변경 처리
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setBoard({ ...board, [name]: value });
+  };
+
+  // 저장 처리
+  const handleSave = async () => {
+    try {
+      if (board.imgFiles) {
+        await addBoard(board, board.imgFiles);
+      } else {
+        await addBoard(board, []);
+      }
+
+      loadBoardData(); // 저장 후 목록 새로고침
+      setBoard({
+        id: 0,
+        title: "",
+        content: "",
+        regTime: "",
+        category: "",
+        imgUrl: "",
+        imgFiles: [],
+      });
+      handleClose();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  return (
+    <>
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+        <DialogTitle>New Board</DialogTitle>
+        <DialogContent>
+          {/* 카테고리 선택 */}
+          <FormControl fullWidth margin="dense">
+            <InputLabel id="category-label">카테고리</InputLabel>
+            <Select
+              labelId="category-label"
+              name="category"
+              value={board.category}
+              onChange={(e) => setBoard({ ...board, category: e.target.value })}
+            >
+              {categoryOptions.map((c) => (
+                <MenuItem key={c.value} value={c.value}>
+                  {c.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <TextField
+            autoFocus
+            margin="dense"
+            label="제목"
+            name="title"
+            value={board.title}
+            onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            label="내용"
+            name="content"
+            value={board.content}
+            onChange={handleChange}
+            multiline
+            rows={30}
+            fullWidth
+          />
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => {
+              if (e.target.files) {
+                const files = Array.from(e.target.files).slice(0, 5); // 최대 3개
+                setBoard({ ...board, imgFiles: files });
+              }
+            }}
+          />
+
+          {/* 미리보기 */}
+          {board.imgFiles &&
+            board.imgFiles.map((file, idx) => (
+              <img
+                key={idx}
+                src={URL.createObjectURL(file)}
+                alt={`첨부 이미지 ${idx + 1}`}
+                style={{ maxWidth: "100%", marginTop: 10 }}
+              />
+            ))}
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={handleSave} variant="contained">
+            저장
+          </Button>
+          <Button onClick={handleClose}>닫기</Button>
+        </DialogActions>
+      </Dialog>
+      <Button variant="contained" onClick={handleOpen}>
+        글쓰기
+      </Button>
+    </>
+  );
+}

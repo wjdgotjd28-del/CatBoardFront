@@ -1,17 +1,20 @@
-import { Container, CssBaseline } from "@mui/material";
-// import "./App.css";
-import Header from "./Header";
+import { CssBaseline, Box, Container } from "@mui/material";
+import Header from "./Layouts/Header";
 import AppRoutes from "./AppRoutes";
-import { Router } from "@mui/icons-material";
+import Footer from "./Layouts/Footer";
 
 function App() {
   return (
     <>
+      <CssBaseline />
+      <Header />
+      {/* 본문 */}
       <Container maxWidth="xl">
-        <CssBaseline />
-        <Header />
         <AppRoutes />
       </Container>
+
+      <Box display="flex" flexDirection="column" minHeight="100vh"></Box>
+      <Footer />
     </>
   );
 }
