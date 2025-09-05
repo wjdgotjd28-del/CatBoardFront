@@ -25,6 +25,7 @@ export default function Header() {
             냥냥
           </Typography>
           <Button color="inherit">Login</Button>
+          <Button color="inherit">LogOut</Button>
         </Toolbar>
       </AppBar>
     </Box>

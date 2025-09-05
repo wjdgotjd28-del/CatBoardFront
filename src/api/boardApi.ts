@@ -1,7 +1,7 @@
 import type { AxiosRequestConfig } from "axios";
-import type { Board, BoardList } from "../type";
+import type { Board, BoardList } from "../ts/type";
 import axios from "axios";
-const BASE_URL = import.meta.env.VITE_API_URL;
+export const BASE_URL = import.meta.env.VITE_API_URL;
 export const getAxiosConfig = (): AxiosRequestConfig => {
   const token = sessionStorage.getItem("jwt");
   return {

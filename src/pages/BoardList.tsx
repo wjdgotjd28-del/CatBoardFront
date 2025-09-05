@@ -1,5 +1,5 @@
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
-import type { BoardList } from "../type";
+import type { BoardList } from "../ts/type";
 import { useEffect, useState } from "react";
 import AddBoard from "../components/AddBoard";
 import { getBoardList } from "../api/boardApi";

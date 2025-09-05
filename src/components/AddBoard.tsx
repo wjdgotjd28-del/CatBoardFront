@@ -11,9 +11,9 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
-import type { Board } from "../type";
+import type { Board } from "../ts/type";
 import { addBoard } from "../api/boardApi";
-import { categoryOptions } from "../category";
+import { categoryOptions } from "../ts/category";
 
 type AddBoardProps = {
   loadBoardData: () => void;

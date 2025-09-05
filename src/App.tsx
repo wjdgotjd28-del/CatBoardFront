@@ -1,7 +1,7 @@
 import { CssBaseline, Box, Container } from "@mui/material";
-import Header from "./Layouts/Header";
+import Header from "./layouts/Header";
 import AppRoutes from "./AppRoutes";
-import Footer from "./Layouts/Footer";
+import Footer from "./layouts/Footer";
 
 function App() {
   return (

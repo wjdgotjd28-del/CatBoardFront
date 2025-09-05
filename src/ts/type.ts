@@ -14,3 +14,9 @@ export type BoardList = {
   regTime: string;
   nickname: string;
 };
+
+export type Member = {
+  email: string;
+  password: string;
+  nickname?: string;
+};
