@@ -6,30 +6,26 @@ export const getAxiosConfig = (): AxiosRequestConfig => {
   const token = sessionStorage.getItem("jwt");
   return {
     headers: {
-      Authorization: token,
+      Authorization: token ? `Bearer ${token}` : "",
     },
   };
 };
-export const getBoardList = (): BoardList[] => [
-  {
-    id: 1,
-    nickname: "홍길동",
-    title: "첫 번째 게시글",
-    regTime: "2025-09-04T11:00:00Z",
-  },
-  {
-    id: 2,
-    nickname: "홍길동",
-    title: "첫 번째 게시글",
-    regTime: "2025-09-04T11:00:00Z",
-  },
-  {
-    id: 3,
-    nickname: "홍길동",
-    title: "첫 번째 게시글",
-    regTime: "2025-09-04T11:00:00Z",
-  },
-];
+
+export const getBoardList = async (category: string): Promise<BoardList[]> => {
+  const response = await axios.get(
+    `${BASE_URL}/board/category/${category}`, // category를 URL에 동적으로 넣음
+    getAxiosConfig()
+  );
+  return response.data;
+};
+
+export const getBoard = async (boardId: number): Promise<Board> => {
+  const response = await axios.get(
+    `${BASE_URL}/board/${boardId}`,
+    getAxiosConfig()
+  );
+  return response.data;
+};
 
 // 게시글 추가
 export const addBoard = async (
@@ -51,9 +47,27 @@ export const addBoard = async (
   const response = await axios.post(`${BASE_URL}/board/new`, formData, {
     ...getAxiosConfig(),
     headers: {
+      ...getAxiosConfig().headers, // Authorization 유지
       "Content-Type": "multipart/form-data",
     },
   });
   console.log(response.data);
   return response.data; // boardId
+};
+
+export const updateBoard = async (board: Board): Promise<Board> => {
+  const response = await axios.put(
+    `${BASE_URL}/board${board.id}`,
+    board,
+    getAxiosConfig()
+  );
+  return response.data;
+};
+
+export const deleteBoard = async (boardId: number): Promise<number> => {
+  const response = await axios.delete(
+    `${BASE_URL}/board/${boardId}`,
+    getAxiosConfig()
+  );
+  return response.data;
 };

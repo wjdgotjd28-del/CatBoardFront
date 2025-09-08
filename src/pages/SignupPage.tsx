@@ -1,11 +1,10 @@
-import { Button, Snackbar, Stack, TextField } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../ts/store";
+
 import type { Member } from "../ts/type";
-import axios from "axios";
+
 import { signUp } from "../api/memberApi";
-import { Token } from "@mui/icons-material";
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -14,7 +13,6 @@ export default function SignupPage() {
     password: "",
     nickname: "",
   });
-  const [toastOpen, setToastOpen] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMember({ ...member, [e.target.name]: e.target.value });

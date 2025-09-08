@@ -10,16 +10,17 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { Board } from "../ts/type";
 import { addBoard } from "../api/boardApi";
 import { categoryOptions } from "../ts/category";
 
 type AddBoardProps = {
   loadBoardData: () => void;
+  category?: string;
 };
 
-export default function AddBoard({ loadBoardData }: AddBoardProps) {
+export default function AddBoard({ loadBoardData, category }: AddBoardProps) {
   const [open, setOpen] = useState(false);
   const [board, setBoard] = useState<Board>({
     id: 0,
@@ -27,8 +28,15 @@ export default function AddBoard({ loadBoardData }: AddBoardProps) {
     content: "",
     regTime: "",
     category: "",
-    imgUrl: "",
+    imgUrl: [],
   });
+
+  // 부모에서 받은 category로 초기값 세팅
+  useEffect(() => {
+    if (category) {
+      setBoard((prev) => ({ ...prev, category }));
+    }
+  }, [category]);
 
   // input 값 변경 처리
   const handleChange = (
@@ -54,7 +62,7 @@ export default function AddBoard({ loadBoardData }: AddBoardProps) {
         content: "",
         regTime: "",
         category: "",
-        imgUrl: "",
+        imgUrl: [],
         imgFiles: [],
       });
       handleClose();
