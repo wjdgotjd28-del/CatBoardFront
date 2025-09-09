@@ -1,5 +1,13 @@
-import { Stack, TextField } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+} from "@mui/material";
 import type { Board } from "../ts/type";
+import { categoryOptions } from "../ts/category";
 
 type BoardDialogContentProps = {
   board: Board;
@@ -14,23 +22,40 @@ export default function BoardDialogContent({
 }: BoardDialogContentProps) {
   return (
     <Stack spacing={2} mt={1}>
+      {/* 카테고리 선택 */}
+      <FormControl fullWidth margin="dense">
+        <InputLabel id="category-label">카테고리</InputLabel>
+        <Select
+          labelId="category-label"
+          name="category"
+          value={board.category}
+          onChange={(e) => setBoard({ ...board, category: e.target.value })}
+        >
+          {categoryOptions.map((c) => (
+            <MenuItem key={c.value} value={c.value}>
+              {c.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <TextField
-        label="카테고리"
-        name="category"
-        value={board.category}
-        onChange={handleChange}
-      />
-      <TextField
+        autoFocus
+        margin="dense"
         label="제목"
         name="title"
         value={board.title}
         onChange={handleChange}
+        fullWidth
       />
       <TextField
+        margin="dense"
         label="내용"
         name="content"
         value={board.content}
         onChange={handleChange}
+        multiline
+        rows={20}
+        fullWidth
       />
       {/* 새 이미지 업로드 */}
       <input
@@ -40,18 +65,18 @@ export default function BoardDialogContent({
         onChange={(e) => {
           if (e.target.files) {
             const files = Array.from(e.target.files).slice(0, 5);
-            setBoard({ ...board, imgFiles: files });
+            setBoard({ ...board, imgFiles: files, boardImgDtoList: [] });
           }
         }}
       />
 
       {/* 기존 이미지 미리보기 */}
-      {board.imgUrl &&
-        board.imgUrl.map((url, idx) => (
+      {board.boardImgDtoList &&
+        board.boardImgDtoList?.map((img) => (
           <img
-            key={idx}
-            src={url}
-            alt={`기존 이미지 ${idx + 1}`}
+            key={img.id}
+            src={`/api${img.imgUrl}`}
+            alt={img.imgName}
             style={{ maxWidth: "100%", marginTop: 10 }}
           />
         ))}

@@ -29,6 +29,7 @@ export default function AddBoard({ loadBoardData, category }: AddBoardProps) {
     regTime: "",
     category: "",
     imgUrl: [],
+    imgFiles: [],
   });
 
   // 부모에서 받은 category로 초기값 세팅

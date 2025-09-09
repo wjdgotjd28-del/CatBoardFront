@@ -19,11 +19,12 @@ export const getBoardList = async (category: string): Promise<BoardList[]> => {
   return response.data;
 };
 
-export const getBoard = async (boardId: number): Promise<Board> => {
+export const getBoardDtl = async (boardId: number): Promise<Board> => {
   const response = await axios.get(
     `${BASE_URL}/board/${boardId}`,
     getAxiosConfig()
   );
+  console.log(response.data);
   return response.data;
 };
 
@@ -55,12 +56,32 @@ export const addBoard = async (
   return response.data; // boardId
 };
 
-export const updateBoard = async (board: Board): Promise<Board> => {
-  const response = await axios.put(
-    `${BASE_URL}/board${board.id}`,
-    board,
-    getAxiosConfig()
+export const updateBoard = async (board: Board, files: File[] = []) => {
+  const formData = new FormData();
+
+  // 게시글 기본 정보
+  formData.append("id", String(board.id));
+  formData.append("title", board.title);
+  formData.append("content", board.content);
+  formData.append("category", board.category);
+
+  // 기존 이미지 제거 여부 (boardImgDtoList 비어있으면 제거)
+  formData.append(
+    "removeOldImages",
+    board.boardImgDtoList?.length === 0 ? "Y" : "N"
   );
+
+  // 새 이미지 파일 추가
+  files.forEach((file) => formData.append("boardImgFile", file));
+
+  const response = await axios.put(`${BASE_URL}/board/${board.id}`, formData, {
+    ...getAxiosConfig(),
+    headers: {
+      ...getAxiosConfig().headers,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  console.log(response.data);
   return response.data;
 };
 
@@ -69,5 +90,6 @@ export const deleteBoard = async (boardId: number): Promise<number> => {
     `${BASE_URL}/board/${boardId}`,
     getAxiosConfig()
   );
+  console.log(response.data);
   return response.data;
 };

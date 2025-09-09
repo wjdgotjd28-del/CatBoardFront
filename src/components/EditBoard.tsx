@@ -5,11 +5,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  IconButton,
-  Tooltip,
 } from "@mui/material";
 
-import EditIcon from "@mui/icons-material/Edit";
 import type { Board } from "../ts/type";
 import { updateBoard } from "../api/boardApi";
 import BoardDialogContent from "./BoardDialogContent";
@@ -32,10 +29,10 @@ export default function EditBoard({
     category: "",
     imgUrl: [],
     imgFiles: [],
+    boardImgDtoList: [],
   });
 
-  const handleOpen = (e: React.MouseEvent) => {
-    e.stopPropagation(); // 부모 클릭 이벤트 막기
+  const handleOpen = () => {
     setBoard({
       id: boardData.id ?? 0,
       title: boardData.title ?? "",
@@ -44,6 +41,7 @@ export default function EditBoard({
       category: boardData.category ?? "",
       imgUrl: boardData.imgUrl ?? [],
       imgFiles: [],
+      boardImgDtoList: boardData.boardImgDtoList ?? [], // 기존 이미지 객체 그대로 복사
     });
     setOpen(true);
   };
@@ -53,18 +51,28 @@ export default function EditBoard({
   };
 
   const handleSave = async () => {
-    await updateBoard(board);
-    loadBoardData();
-    setBoard({
-      id: 0,
-      title: "",
-      content: "",
-      regTime: "",
-      category: "",
-      imgUrl: [],
-      imgFiles: [],
-    });
-    handleClose();
+    try {
+      // 새 파일이 있든 없든 FormData 기반 updateBoard 호출
+      await updateBoard(board, board.imgFiles ?? []);
+
+      loadBoardData(); // 저장 후 상세 데이터 새로 로드
+
+      // 상태 초기화
+      setBoard({
+        id: 0,
+        title: "",
+        content: "",
+        regTime: "",
+        category: "",
+        imgUrl: [],
+        imgFiles: [],
+        boardImgDtoList: [],
+      });
+
+      handleClose();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,12 +83,8 @@ export default function EditBoard({
 
   return (
     <>
-      <Tooltip title="Edit">
-        <IconButton onClick={handleOpen}>
-          <EditIcon />
-        </IconButton>
-      </Tooltip>
-      <Dialog open={open} onClose={handleClose}>
+      <Button onClick={handleOpen}>수정</Button>
+      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
         <DialogTitle>글 수정</DialogTitle>
         <DialogContent>
           <BoardDialogContent
