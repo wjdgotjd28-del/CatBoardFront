@@ -1,7 +1,6 @@
 import { CssBaseline, Box, Container } from "@mui/material";
 import Header from "./layouts/Header";
 import AppRoutes from "./AppRoutes";
-import Footer from "./layouts/Footer";
 
 function App() {
   return (
@@ -13,8 +12,7 @@ function App() {
         <AppRoutes />
       </Container>
 
-      <Box display="flex" flexDirection="column" minHeight="100vh"></Box>
-      <Footer />
+      {/* <Box display="flex" flexDirection="column" minHeight="100vh"></Box> */}
     </>
   );
 }

@@ -22,11 +22,11 @@ export default function Header() {
   const { isAuthenticated } = useAuthStore();
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" color="primary">
         <Toolbar>
           <Box
             component="img"
-            src="../public/냥냥.jpg" // 이미지 경로
+            src="/냥냥.jpg" // 이미지 경로
             sx={{ width: 50, height: 50, mr: 1, cursor: "pointer" }}
             onClick={() => navigate("/")}
           />

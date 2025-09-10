@@ -9,6 +9,8 @@ import AddBoard from "../components/AddBoard";
 import { getBoardList } from "../api/boardApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDateTime } from "../ts/dateFormat";
+import { Box } from "@mui/material";
+import { categoryOptions } from "../ts/category";
 
 export default function BoardList() {
   const [data, setData] = useState<BoardList[]>([]);
@@ -50,39 +52,6 @@ export default function BoardList() {
         <div>{formatDateTime(params.value as string)}</div>
       ),
     },
-
-    // 수정 삭제 버튼
-    // {
-    //   field: "edit",
-    //   headerName: " ",
-    //   width: 90,
-    //   sortable: false,
-    //   filterable: false,
-    //   disableColumnMenu: true,
-    //   renderCell: (params: GridCellParams) => (
-    //     <EditBoard boardData={params.row} loadBoardData={loadBoardData} />
-    //   ),
-    // },
-    // {
-    //   field: "delete",
-    //   headerName: " ",
-    //   width: 90,
-    //   sortable: false,
-    //   filterable: false,
-    //   disableColumnMenu: true,
-    //   renderCell: (params: GridCellParams) => (
-    //     <Tooltip title="Delete">
-    //       <IconButton
-    //         onClick={(e) => {
-    //           e.stopPropagation();
-    //           deleteBoardData(params.row.id);
-    //         }}
-    //       >
-    //         <DeleteIcon />
-    //       </IconButton>
-    //     </Tooltip>
-    //   ),
-    // },
   ];
 
   const loadBoardData = async () => {
@@ -101,14 +70,24 @@ export default function BoardList() {
     loadBoardData();
   }, [category]);
 
+  // 한글 라벨 찾기
+  const categoryLabel =
+    categoryOptions.find((opt) => opt.value === category)?.label || category;
+
   return (
     <>
+      <h2>{categoryLabel}</h2>
       <DataGrid
         rows={data}
         columns={columns}
         getRowId={(row) => row.id}
         disableRowSelectionOnClick={true}
         showToolbar
+        initialState={{
+          sorting: {
+            sortModel: [{ field: "id", sort: "desc" }],
+          },
+        }}
       />
       <AddBoard loadBoardData={loadBoardData} category={category || ""} />
     </>

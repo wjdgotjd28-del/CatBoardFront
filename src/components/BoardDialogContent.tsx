@@ -54,7 +54,7 @@ export default function BoardDialogContent({
         value={board.content}
         onChange={handleChange}
         multiline
-        rows={20}
+        rows={15}
         fullWidth
       />
       {/* 새 이미지 업로드 */}
@@ -77,7 +77,7 @@ export default function BoardDialogContent({
             key={img.id}
             src={`/api${img.imgUrl}`}
             alt={img.imgName}
-            style={{ maxWidth: "100%", marginTop: 10 }}
+            style={{ maxWidth: "50%", marginTop: 10 }}
           />
         ))}
 
@@ -88,7 +88,7 @@ export default function BoardDialogContent({
             key={idx}
             src={URL.createObjectURL(file)}
             alt={`새 이미지 ${idx + 1}`}
-            style={{ maxWidth: "100%", marginTop: 10 }}
+            style={{ maxWidth: "50%", marginTop: 10 }}
           />
         ))}
     </Stack>

@@ -56,7 +56,7 @@ export default function BoardDetailPage() {
         <Typography variant="body2" color="green">
           <a
             href={`/board/category/${data.category}`}
-            style={{ textDecoration: "none", color: "inherit" }}
+            style={{ textDecoration: "none" }}
           >
             {data.category || "Q&A 게시판"} &gt;
           </a>
@@ -120,8 +120,10 @@ export default function BoardDetailPage() {
 
       {/* 수정 삭제 */}
 
-      <EditBoard boardData={data} loadBoardData={loadBoardData}></EditBoard>
-      <Button onClick={() => deleteBoardData(boardId)}>삭제</Button>
+      <Box display="flex" justifyContent="center" mt={2}>
+        <EditBoard boardData={data} loadBoardData={loadBoardData}></EditBoard>
+        <Button onClick={() => deleteBoardData(boardId)}>삭제</Button>
+      </Box>
     </Box>
   );
 }

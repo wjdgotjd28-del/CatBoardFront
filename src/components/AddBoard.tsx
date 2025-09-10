@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -78,7 +79,7 @@ export default function AddBoard({ loadBoardData, category }: AddBoardProps) {
   return (
     <>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-        <DialogTitle>New Board</DialogTitle>
+        <DialogTitle>게시판 작성</DialogTitle>
         <DialogContent>
           {/* 카테고리 선택 */}
           <FormControl fullWidth margin="dense">
@@ -113,7 +114,7 @@ export default function AddBoard({ loadBoardData, category }: AddBoardProps) {
             value={board.content}
             onChange={handleChange}
             multiline
-            rows={30}
+            rows={15}
             fullWidth
           />
           <input
@@ -135,7 +136,7 @@ export default function AddBoard({ loadBoardData, category }: AddBoardProps) {
                 key={idx}
                 src={URL.createObjectURL(file)}
                 alt={`첨부 이미지 ${idx + 1}`}
-                style={{ maxWidth: "100%", marginTop: 10 }}
+                style={{ maxWidth: "50%", marginTop: 10 }}
               />
             ))}
         </DialogContent>
@@ -147,9 +148,11 @@ export default function AddBoard({ loadBoardData, category }: AddBoardProps) {
           <Button onClick={handleClose}>닫기</Button>
         </DialogActions>
       </Dialog>
-      <Button variant="contained" onClick={handleOpen}>
-        글쓰기
-      </Button>
+      <Box display="flex" justifyContent="center" mt={2}>
+        <Button variant="contained" onClick={handleOpen}>
+          글쓰기
+        </Button>
+      </Box>
     </>
   );
 }
