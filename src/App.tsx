@@ -1,6 +1,6 @@
-import { CssBaseline, Box, Container } from "@mui/material";
-import Header from "./layouts/Header";
+import { CssBaseline, Container } from "@mui/material";
 import AppRoutes from "./AppRoutes";
+import Header from "./Layouts/Header";
 
 function App() {
   return (

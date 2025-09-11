@@ -2,14 +2,13 @@ import {
   DataGrid,
   type GridCellParams,
   type GridColDef,
-} from "@mui/x-data-grid";
+}
 import type { BoardList } from "../ts/type";
 import { useEffect, useState } from "react";
 import AddBoard from "../components/AddBoard";
 import { getBoardList } from "../api/boardApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDateTime } from "../ts/dateFormat";
-import { Box } from "@mui/material";
 import { categoryOptions } from "../ts/category";
 
 export default function BoardList() {
