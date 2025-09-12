@@ -21,17 +21,17 @@ export default function MainPage() {
 
   // 이미지 매핑 (public 폴더에 넣기)
   const imageMap: Record<string, string> = {
-    CAT_SHOWCASE: "../public/자랑.webp",
-    CAT_HUMOR: "../public/유머.jpg",
-    INFORMATION: "../public/정보.avif",
-    FREE_BOARD: "../public/자유.jpg",
+    CAT_SHOWCASE: "자랑.webp",
+    CAT_HUMOR: "/유머.jpg",
+    INFORMATION: "/정보.avif",
+    FREE_BOARD: "/자유.jpg",
   };
 
   return (
     <>
       <Box display="flex" justifyContent="center" height={300}>
         <img
-          src="../public/냥냥냥.png"
+          src="/냥냥냥.png"
           alt="배너"
           style={{ maxWidth: "100%", height: 400, width: 1000 }}
         />
