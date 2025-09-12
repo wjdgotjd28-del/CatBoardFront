@@ -45,7 +45,7 @@ export default function MainPage() {
       >
         <Grid container spacing={4} justifyContent="center">
           {categoryOptions.map((cat) => (
-            <Grid item key={cat.value}>
+            <Grid key={cat.value}>
               <Box
                 onClick={() => navigate(`/board/category/${cat.value}`)}
                 sx={{
