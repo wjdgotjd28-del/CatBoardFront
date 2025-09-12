@@ -2,7 +2,7 @@ import {
   DataGrid,
   type GridCellParams,
   type GridColDef,
-}
+} from "@mui/x-data-grid";
 import type { BoardList } from "../ts/type";
 import { useEffect, useState } from "react";
 import AddBoard from "../components/AddBoard";
